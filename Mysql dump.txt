@@ -1,0 +1,5 @@
+Export
+mysqldump -u root -p geekhardwaredb > geekhardwaredb.sql
+
+Import
+mysql –u root –p geekhardwaredb < geekhardwaredb.sql

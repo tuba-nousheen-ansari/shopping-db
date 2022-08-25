@@ -1,0 +1,111 @@
+Admin
+
+create table admin(
+id int primary key auto_increment,
+email varchar(255) not null,
+password varchar(100) not null);
+
+-------------------------------
+Customer
+
+create table customer(
+id int primary key auto_increment,
+name varchar(255) not null,
+email varchar(255) not null unique,
+mobile varchar(10) not null unique,
+address varchar(500) not null,
+gender varchar(10) not null,
+password varchar(30) not null);
+
+=================
+Category
+
+create table category(
+id int primary key auto_increment,
+cat_name varchar(255) not null,
+cat_image varchar(255) not null);
+
+===============
+Product
+
+create table product(
+id int primary key auto_increment,
+pro_name varchar(255) not null,
+pro_price float(2) not null,
+pro_qty int not null,
+cat_id int not null,
+pro_date date,
+pro_image varchar(255) not null,
+foreign key(cat_id) references category(id) on delete cascade);
+alter table product add(description varchar(1000)not null);
+
+==================
+Wishlist
+
+create table wishlist(
+id int primary key auto_increment,
+cust_id int not null,
+pro_id int not null,
+foreign key(cust_id) references customer(id) on delete cascade,
+foreign key(pro_id) references product(id) on delete cascade),
+==============
+Review
+
+create table review(
+id int primary key auto_increment,
+cust_id int not null,
+pro_id int not null,
+comment varchar(500),
+rev_date date,
+foreign key(cust_id) references customer(id) on delete cascade,
+foreign key(pro_id) references product(id) on delete cascade);
+=================
+Cart
+
+create table cart(
+id int primary key auto_increment,
+cust_id int not null,
+pro_id int not null,
+foreign key(cust_id) references customer(id) on delete cascade,
+foreign key(pro_id) references product(id) on delete cascade);
+================
+Order_detail
+
+create table order_detail(
+id int primary key auto_increment,
+cust_id int not null,
+ord_add varchar(500) not null,
+ord_mobile varchar(10) not null unique,
+ord_date date,
+foreign key(cust_id) references customer(id) on delete cascade);
+===========
+Order_product
+
+create table order_product(
+id int primary key auto_increment,
+ord_id int not null,
+pro_id int not null,
+ord_qty int not null,
+total_sum float(2),
+foreign key(ord_id) references order_detail(id),
+foreign key(pro_id) references product(id));
+========================
+Order_history
+
+create table order_history(
+id int primary key auto_increment,
+ord_id int not null,
+pro_id int not null,
+ord_qty int not null,
+total_sum float(2),
+foreign key(ord_id) references order_detail(id) on delete cascade,
+foreign key(pro_id) references product(id) on delete cascade);
+========================
+Customer Support
+
+create table customersupport(
+id int primary key auto_increment,
+cust_id int not null,
+query varchar(500),
+query_date date,
+foreign key(cust_id) references customer(id) on delete cascade); 
